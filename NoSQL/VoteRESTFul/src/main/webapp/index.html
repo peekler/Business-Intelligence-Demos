@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AngularJS First Application</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/service.js"></script>
+</head>
+<body ng-app="main" ng-controller="MainController">
+
+<div >
+    <h2>HTTP Angular demo with JAX-RS!</h2>
+</div>
+
+
+<br/>
+<button ng-click="demo()">Try it!</button>
+
+<div >
+    <h3>Result: {{demoResult.data}}</h3>
+</div>
+
+Your vote:<br/>
+<label><input type="radio" name="vote" ng-model="voteValue" value="A"/> A</label><br/>
+<label><input type="radio" name="vote" ng-model="voteValue" value="B"/> B</label><br/>
+<label><input type="radio" name="vote" ng-model="voteValue" value="C"/> C</label><br/>
+<label><input type="radio" name="vote" ng-model="voteValue" value="D"/> D</label><br/>
+<div>currently selected: {{voteValue}}</div>
+<button ng-click="vote()">Vote</button>
+
+</body>
+</html>
