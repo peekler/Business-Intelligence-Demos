@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ItemsRESTFul</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/service.js"></script>
+</head>
+<body ng-app="main" ng-controller="MainController">
+
+<div >
+    <h2>ItemsRESTFul with JAX-RS and MongoDB!</h2>
+</div>
+
+
+<br/>
+<button ng-click="getItems()">Get items</button>
+
+<div >
+    <h3>Result: {{itemsResult.data}}</h3>
+</div>
+
+</body>
+</html>

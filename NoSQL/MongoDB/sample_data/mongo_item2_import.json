@@ -1,0 +1,19 @@
+{
+  "name": "Bread",
+  "brand": "Tanműhelyi",
+  "price": 250,
+  "unit": "HUF",
+  "tbu": "11.15.2015",
+  "shops": [{
+     "shop": "TESCO",
+     "coord": [ 37.216077, 19.248447 ],
+     "city": "Kecskemét",
+     "street": "Petőfi tér",
+     "nr": "25"},
+     { "shop": "Spar",
+     "coord": [ 37.216067, 19.248446 ],
+     "city": "Kecskemét",
+     "street": "Széchenyi utca",
+     "nr": "42"}
+  ]
+}

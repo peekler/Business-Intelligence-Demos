@@ -1,0 +1,18 @@
+{
+  "name": "Milk",
+  "brand": "Alföldi",
+  "price": 200,
+  "unit": "HUF",
+  "shops": [{
+     "shop": "CBA",
+     "coord": [ 37.856077, 19.848447 ],
+     "city": "Budapest",
+     "street": "József utca",
+     "nr": "15"},
+     { "shop": "Spar",
+     "coord": [ 37.256077, 19.848447 ],
+     "city": "Budapest",
+     "street": "Bem utca",
+     "nr": "21"}
+  ]
+}
