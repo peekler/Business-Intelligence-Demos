@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CassandraDemo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CassandraDemo_jar</output-path>
+    <root id="archive" name="CassandraDemo.jar">
+      <element id="module-output" name="CassandraDemo" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/cassandra-driver-dse-2.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/cassandra-driver-core-2.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/bsh-2.0b4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/lz4-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/guava-16.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/log4j-1.2.17.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/jcommander-1.27.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/slf4j-api-1.7.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/netty-3.9.0.Final.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/snappy-java-1.0.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/metrics-core-3.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/cassandra-java-driver-2.0.2/lib/slf4j-log4j12-1.7.6.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
