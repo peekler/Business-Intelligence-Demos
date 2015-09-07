@@ -1,5 +1,4 @@
--- Mennyi az elõfizetõk átlagéletkora? Hogyan oszlik el a korosztályok között (-17, 18-34, 35-59, 60-)?
-select avg(age) from customer
+-- Hogyan oszlik el a korosztályok között (-17, 18-34, 35-59, 60-)?
 select '-17', count(*) from customer where age<=17
 select '18-34', count(*) from customer where age>17 and age <= 34
 select '35-59', count(*) from customer where age>34 and age <= 59
@@ -12,7 +11,8 @@ select '60-', count(*) from customer where age>59
 
 -- a DATEPART egy dátumból vissza tudja adni az évet, hónapot, napot, hetet
 -- csoportosítjuk elõfizetõnként és hetenként és vesszük a telefonálás hosszok átlagát
-select UserID, DATEPART(week, Timestamp) as week, avg(Length) as avg_on_week from CallLog
+select UserID, DATEPART(week, Timestamp) as week, avg(Length) as avg_on_week
+from Traffic where Type='V'
 group by UserID, DATEPART(week, Timestamp)
 order by UserID, week
 
@@ -26,14 +26,16 @@ order by UserID, week
 
 -- mind a két táblára szükségünk lesz, nemenként csoportosítva a leghosszabb hívásra vagyunk kíváncsiak
 select Gender, max(Length) as LongestCall
-from CallLog join Customer on CallLog.UserID = Customer.UserID
+from Traffic join Customer on Traffic.UserID = Customer.UserID
 join (
 	-- ez a belsõ lekérdezés számolja ki a nemenkénti átlagot és a kétszeres szórást
-select Gender as FilterGender, avg(Length) as AvgLength, 2*STDEVP(Length) StdDeviation
-	from CallLog join Customer on CallLog.UserID = Customer.UserID
+	select Gender as FilterGender, avg(Length) as AvgLength, 2*STDEVP(Length) StdDeviation
+	from Traffic join Customer on Traffic.UserID = Customer.UserID
+	where Type='V'
 	group by Gender ) filter
 on Gender = filter.FilterGender
 -- ezzel szûrjük ki a kétszeres szórásnál hosszabb hívásokat
+where Type='V'
 and Length <= filter.AvgLength + filter.StdDeviation 
 group by Gender
 
@@ -48,8 +50,8 @@ group by Gender
 -- a változást egy + vagy – jellel jelöljük.
 
 -- nézet létrehozása
-create view WeeklyAverage as
-select UserID, DATEPART(week, Timestamp) as week, avg(Length) as avg_on_week from CallLog
+create view WeeklyAverageVoice as
+select UserID, DATEPART(week, Timestamp) as week, avg(Length) as avg_on_week from Traffic where [Type]='V'
 group by UserID, DATEPART(week, Timestamp)
 
 -- A + és - jelhez egy segéd függvény.
@@ -69,5 +71,5 @@ GO
 
 -- Futtassuk e heteket összehasonlító lekérdezést.
 select top 5 w1.UserId, w1.week, w2.week, dbo.PlusMinusNoChange(w1.avg_on_week, w2.avg_on_week) as change
-from WeeklyAverage w1 join WeeklyAverage w2 on w1.UserId = w2.UserId
+from WeeklyAverageVoice w1 join WeeklyAverageVoice w2 on w1.UserId = w2.UserId
 where w1.week < w2.week

@@ -1,16 +1,16 @@
 # CSV fajl betoltese
-calllog <- read.csv("GY-call-log-csv.csv", header=TRUE, sep=",")
+traffic <- read.csv("GY-call-log-csv.csv", header=TRUE, sep=",")
 # a beolvasott adat egy data.frame tipusu valtozo
 # minden oszlop a nevevel indexelheto, es sajat tipusa van (mintavetel alapjan)
-# pl. a UserGender oszlop a calllog$UserGender kifejezessel elheto el, es factor tipusu
+# pl. a UserGender oszlop a traffic$UserGender kifejezessel elheto el, es factor tipusu
 
 # hany elofizetorol van adat
-elofizetok_szama <- length( unique(calllog$UserID) )
+elofizetok_szama <- length( unique(traffic$UserID) )
 
 # ferfiak vagy a nok telefonalnak tobbet
 # szurjuk le a rekordokat a nemekre a subset fuggvennyel
-hivasok_ffi <- subset(calllog,UserGender=='M')
-hivasok_no <- subset(calllog,UserGender=='F')
+hivasok_ffi <- subset(traffic, UserGender=='M' & Type=='V')
+hivasok_no <- subset(traffic, UserGender=='F' & Type=='V')
 # vegyuk az atlagat a szurt rekordokbol a Length erteknek
 atlag_ffi <- mean( hivasok_ffi$Length )
 atlag_no <- mean( hivasok_no$Length )
@@ -27,5 +27,5 @@ leghosszabb_no <- max(hivasok_no_szurt$Length)
 # mas modszer a szuresre: kvantilis hasznalataval
 # https://www.mathsisfun.com/data/quartiles.html
 qnt <- quantile(hivasok_ffi$Length, probs=c(.95))
-H <- 1.5 * IQR(hivasok_ffi)
+H <- 1.5 * IQR(hivasok_ffi$Length)
 leghosszabb_ffi <- max(subset(hivasok_ffi, Length < qnt[1] + H)$Length)
