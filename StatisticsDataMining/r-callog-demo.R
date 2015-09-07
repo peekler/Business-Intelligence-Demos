@@ -1,8 +1,8 @@
 # CSV fajl betoltese
-calllog <- read.csv("GY-call-log-csv.csv", header=TRUE, sep=";")
+calllog <- read.csv("GY-call-log-csv.csv", header=TRUE, sep=",")
 # a beolvasott adat egy data.frame tipusu valtozo
 # minden oszlop a nevevel indexelheto, es sajat tipusa van (mintavetel alapjan)
-# pl. a UserGender oszlop a calllog$UserGender kifejeyessen elheto el, es factor tipusu
+# pl. a UserGender oszlop a calllog$UserGender kifejezessel elheto el, es factor tipusu
 
 # hany elofizetorol van adat
 elofizetok_szama <- length( unique(calllog$UserID) )

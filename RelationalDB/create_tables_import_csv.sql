@@ -20,7 +20,7 @@ BULK INSERT [RawImport]
 FROM 'c:\import.csv'
 WITH
 (
-	FIELDTERMINATOR =';',
+	FIELDTERMINATOR =',',
 	ROWTERMINATOR ='\n',
 	FIRSTROW = 2
 );
@@ -65,12 +65,12 @@ fetch next from cur into @userid, @timestamp, @length, @usergender, @userage
 while @@FETCH_STATUS = 0
 begin
 	-- új Customer, ha még nem létezik
-if not exists(select * from Customer where Customer.UserID = @userid)
+	if not exists(select * from Customer where Customer.UserID = @userid)
 	begin
 		insert into Customer(UserId,Gender,Age) values (@userid, @usergender, @userage)
 	end
 	-- a nem felhasználói adatok felvétele a másik tálbába
-insert into CallLog(Timestamp, Length, UserID) values(@timestamp, @length, @userid)
+	insert into CallLog(Timestamp, Length, UserID) values(@timestamp, @length, @userid)
 
 	fetch next from cur into @userid, @timestamp, @length, @usergender, @userage
 end
