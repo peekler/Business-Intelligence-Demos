@@ -1,6 +1,5 @@
 # Relational databases samples
 
-Elso gyakorlat anyaga.
-* Relacios adatbazis letrehozasa, adatbazis tervezes.
-* Modern eszkozok adatbazis kezelokben.
-* Egyszeru uzleti intelligencia rendszer adatbazis alapokon.
+* create_tables_import_csv.sql: Adatbazis letrehozasa, CSV importalas, adat normalizalas.
+* query_samples.sql: Adat felterkepezes, egyszeru riport keszites SQL-ben.
+* sql-excel-pivot-example.xlsx: Vizualizaslas Excel segitsegevel.
