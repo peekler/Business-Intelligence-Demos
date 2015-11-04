@@ -1,0 +1,587 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/28/2015 8:16:06 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADUDAS-LAPTOP"
+  DTS:CreatorName="adudas-laptop\Ákos"
+  DTS:DTSID="{668910E2-928A-446C-AA40-D3EE4F07FE65}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.4100.1"
+  DTS:LocaleID="1038"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="10"
+  DTS:VersionGUID="{37C92D62-1925-452C-B8E4-AAB2C6DD6D01}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Call Log CSV connection]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{8F53C828-609B-49BB-BB45-EC8C7CE410A1}"
+      DTS:ObjectName="Call Log CSV connection">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::curFilePath]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1038"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1250">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="UserID"
+              DTS:DTSID="{5492CF07-8A9F-45AB-A28B-07F342424186}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="7"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Timestamp"
+              DTS:DTSID="{1245F11C-9FB6-46AE-90F2-E1329B496657}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Length"
+              DTS:DTSID="{C0FFF7E4-A40C-49F9-9837-D6431D1AEA52}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="1"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="UserGender"
+              DTS:DTSID="{3D901076-E6B6-46E1-8412-450A7E84C7AE}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="UserAge"
+              DTS:DTSID="{EF6E48CC-89CE-43CC-9A8B-7E627C9AC063}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost]"
+      DTS:CreationName="ADO.NET:SQL"
+      DTS:DTSID="{5848F532-05EE-4E3E-80A2-8B2A616EC6A4}"
+      DTS:ObjectName="localhost">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=localhost;Initial Catalog=BIDemo;Integrated Security=True;Connect Timeout=30;Application Name=SSIS-Package-{5848F532-05EE-4E3E-80A2-8B2A616EC6A4}localhost;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{490CB4AE-BFB0-42F9-8695-5E6B357D1305}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="curFilePath">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CSV file iterator"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{B6C0657A-967F-440D-9A7B-CD2051EDE6BF}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CSV file iterator">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{AFE2E5DB-EE8F-4D54-9A91-F6AFB4D60199}"
+        DTS:ObjectName="{AFE2E5DB-EE8F-4D54-9A91-F6AFB4D60199}">
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="D:\BI\" />
+            <FEFEProperty
+              FileSpec="*.csv" />
+            <FEFEProperty
+              FileNameRetrievalType="0" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\CSV file iterator\CSV Import"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{5032B133-75CA-4ECF-B3B7-C8F3BAE31040}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="CSV Import"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\CSV file iterator\CSV Import\Read CSV file"
+                  componentClassID="Microsoft.FlatFileSource"
+                  contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Flat File Source"
+                  localeId="1038"
+                  name="Read CSV file"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether zero-length columns are treated as null."
+                      name="RetainNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                      name="FileNameColumnName"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\CSV file iterator\CSV Import\Read CSV file.Connections[FlatFileConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Call Log CSV connection]"
+                      connectionManagerRefId="Package.ConnectionManagers[Call Log CSV connection]"
+                      name="FlatFileConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output]"
+                      name="Flat File Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[UserID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[UserID]"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[UserID]"
+                          name="UserID"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[Timestamp]"
+                          dataType="date"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[Timestamp]"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[Timestamp]"
+                          name="Timestamp"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[Length]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[Length]"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[Length]"
+                          name="Length"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[UserGender]"
+                          codePage="1250"
+                          dataType="str"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[UserGender]"
+                          length="1"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[UserGender]"
+                          name="UserGender"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[UserAge]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[UserAge]"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].Columns[UserAge]"
+                          name="UserAge"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the data is in binary format."
+                              name="UseBinaryFormat">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[UserID]"
+                          dataType="i4"
+                          name="UserID" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[Timestamp]"
+                          dataType="date"
+                          name="Timestamp" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[Length]"
+                          dataType="i4"
+                          name="Length" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[UserGender]"
+                          codePage="1250"
+                          dataType="str"
+                          length="1"
+                          name="UserGender" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output].ExternalColumns[UserAge]"
+                          dataType="i4"
+                          name="UserAge" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output]"
+                      isErrorOut="true"
+                      name="Flat File Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          codePage="1250"
+                          dataType="text"
+                          description="Flat File Source Error Output Column"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                          name="Flat File Source Error Output Column" />
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\CSV file iterator\CSV Import\Save to SQL Server"
+                  componentClassID="Microsoft.ManagedComponentHost"
+                  contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+                  description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+                  name="Save to SQL Server"
+                  usesDispositions="true"
+                  version="2">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="The Destination database table name."
+                      expressionType="Notify"
+                      name="TableOrViewName"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."RawImport"</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                      expressionType="Notify"
+                      name="BatchSize">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                      expressionType="Notify"
+                      name="CommandTimeout">30</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                      expressionType="Notify"
+                      name="UseBulkInsertWhenPossible">true</property>
+                    <property
+                      dataType="System.String"
+                      name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Connections[IDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[localhost]"
+                      connectionManagerRefId="Package.ConnectionManagers[localhost]"
+                      description="Managed connection manager"
+                      name="IDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input]"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="ADO NET Destination Input">
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input].ExternalColumns[UserId]"
+                          dataType="i4"
+                          name="UserId" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input].ExternalColumns[Timestamp]"
+                          dataType="dbTimeStamp"
+                          name="Timestamp" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input].ExternalColumns[Length]"
+                          dataType="i4"
+                          name="Length" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input].ExternalColumns[UserGender]"
+                          dataType="wstr"
+                          length="1"
+                          name="UserGender" />
+                        <externalMetadataColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input].ExternalColumns[UserAge]"
+                          dataType="i4"
+                          name="UserAge" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Outputs[ADO NET Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="ADO NET Destination Error Output"
+                      synchronousInputId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\CSV file iterator\CSV Import\Save to SQL Server.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\CSV file iterator\CSV Import\Save to SQL Server.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\CSV file iterator\CSV Import\Save to SQL Server.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\CSV file iterator\CSV Import.Paths[Flat File Source Output]"
+                  endId="Package\CSV file iterator\CSV Import\Save to SQL Server.Inputs[ADO NET Destination Input]"
+                  name="Flat File Source Output"
+                  startId="Package\CSV file iterator\CSV Import\Read CSV file.Outputs[Flat File Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{6B0B2476-71BC-4C57-9D26-6B52D6D88CF9}"
+          DTS:ObjectName="{6B0B2476-71BC-4C57-9D26-6B52D6D88CF9}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::curFilePath" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\T-SQL post process transform in database"
+      DTS:CreationName="Microsoft.DbMaintenanceTSQLExecuteTask"
+      DTS:Description="T-SQL post process transform in database"
+      DTS:DTSID="{C82B5516-03AC-41FE-8A20-60A07D499C6E}"
+      DTS:ExecutableType="Microsoft.DbMaintenanceTSQLExecuteTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="T-SQL post process transform in database"
+      DTS:TaskContact="Execute T-SQL Statement Task; Microsoft Corporation; Microsoft SQL Server v9; © 2004 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5848F532-05EE-4E3E-80A2-8B2A616EC6A4}"
+          SQLTask:SqlStatementSource="use [BIDemo]&#xA;&#xA;-- kurzorhoz szükséges változók&#xA;declare @userid int&#xA;declare @length int&#xA;declare @userage int&#xA;declare @timestamp datetime&#xA;declare @usergender char(1)&#xA;&#xA;-- kurzorhoz definiálása és az iterálás a kurzoron&#xA;declare cur cursor for select UserId, Timestamp, Length, UserGender, UserAge from RawImport FAST_FORWARD&#xA;open cur&#xA;fetch next from cur into @userid, @timestamp, @length, @usergender, @userage&#xA;while @@FETCH_STATUS = 0&#xA;begin&#xA;&#x9;-- új Customer, ha még nem létezik&#xA;if not exists(select * from Customer where Customer.UserID = @userid)&#xA;&#x9;begin&#xA;&#x9;&#x9;insert into Customer(UserId,Gender,Age) values (@userid, @usergender, @userage)&#xA;&#x9;end&#xA;&#x9;-- a nem felhasználói adatok felvétele a másik tálbába&#xA;insert into CallLog(Timestamp, Length, UserID) values(@timestamp, @length, @userid)&#xA;&#xA;&#x9;fetch next from cur into @userid, @timestamp, @length, @usergender, @userage&#xA;end&#xA;close cur&#xA;deallocate cur&#xA;&#xA;-- az importált adatok törlése a ’’staging’’ táblából&#xA;delete from RawImport&#xA;"
+          SQLTask:ServerVersion="9"
+          SQLTask:ExtendedLogging="True"
+          SQLTask:LocalConnectionForLogging=""
+          SQLTask:TaskName=""
+          SQLTask:IgnoreDatabasesInNotOnlineState="False" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1F113C60-E106-4607-808F-ED7D86C7E3D6}"
+      DTS:From="Package\CSV file iterator"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\T-SQL post process transform in database" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\CSV file iterator\CSV Import"
+          TopLeft="55,37" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="271,148"
+          Size="271,191"
+          Id="Package\CSV file iterator"
+          TopLeft="160,76" />
+        <NodeLayout
+          Size="284,42"
+          Id="Package\T-SQL post process transform in database"
+          TopLeft="156,322" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="296.75,267">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55"
+              Start="0,0"
+              End="0,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\CSV file iterator\CSV Import">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\CSV file iterator\CSV Import\Read CSV file"
+          TopLeft="85,58" />
+        <NodeLayout
+          Size="179,42"
+          Id="Package\CSV file iterator\CSV Import\Save to SQL Server"
+          TopLeft="69,143" />
+        <EdgeLayout
+          Id="Package\CSV file iterator\CSV Import.Paths[Flat File Source Output]"
+          TopLeft="159.5,100">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\CSV file iterator\CSV Import\Save to SQL Server">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
