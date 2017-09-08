@@ -1,0 +1,8 @@
+version: '3'
+services:
+  bidemo_redis_web:
+    build: .
+    ports:
+     - "5000:5000"
+  bidemo_redis:
+    image: "redis:alpine"
