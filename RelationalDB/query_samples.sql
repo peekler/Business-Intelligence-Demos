@@ -19,25 +19,35 @@ order by UserID, week
 
 
 
--- A nõk vagy a férfiak telefonálnak hosszabban? Számoljuk ki a leghosszabb hívást a két nemre,
+-- Melyik korosztály telefonál hosszabban? Számoljuk ki a leghosszabb hívást a korcsoportokra,
 -- de elõször szûrjük ki az extrém hosszú hívásokat (ezeket outliernek szokás hívni).
 -- Egy lehetséges módszer a kiszûrésre, ha feltételezzük, hogy a hívások normál eloszlás szerint alakulnak
 -- (valóságban: nem, inkább Posisson vagy Weibull), a kétszeres szóráson túli elemeket (5%) eldobjuk.
 
--- mind a két táblára szükségünk lesz, nemenként csoportosítva a leghosszabb hívásra vagyunk kíváncsiak
-select Gender, max(Length) as LongestCall
+-- mind a két táblára szükségünk lesz, korcsoportonként csoportosítva a leghosszabb hívásra vagyunk kíváncsiak
+select AgeGroup, max(Length) as LongestCall
 from Traffic join Customer on Traffic.UserID = Customer.UserID
 join (
-	-- ez a belsõ lekérdezés számolja ki a nemenkénti átlagot és a kétszeres szórást
-	select Gender as FilterGender, avg(Length) as AvgLength, 2*STDEVP(Length) StdDeviation
-	from Traffic join Customer on Traffic.UserID = Customer.UserID
-	where Type='V'
-	group by Gender ) filter
-on Gender = filter.FilterGender
+	-- ez a lekérdezés számolja ki a nemenkénti átlagot és a kétszeres szórást
+	select AgeGroup, avg(Length) as AvgLength, 2*STDEVP(Length) StdDeviation
+	from (
+		-- ez a lekérdezés sorolja a rekordokat életkor szerint csoportokba
+		select Length, AgeGroup =
+			case
+				when Age <= 17 then '-17'
+				when Age > 17 and Age <= 34 then '18-34'
+				when Age > 34 and Age <= 59 then '35-59'
+				else '60-'
+			end
+		from Traffic join Customer on Traffic.UserID = Customer.UserID
+		where Type='V'
+	) agegrouping
+	group by AgeGroup ) filter
+on AgeGroup = filter.AgeGroup
 -- ezzel szûrjük ki a kétszeres szórásnál hosszabb hívásokat
 where Type='V'
 and Length <= filter.AvgLength + filter.StdDeviation 
-group by Gender
+group by AgeGroup
 
 
 
