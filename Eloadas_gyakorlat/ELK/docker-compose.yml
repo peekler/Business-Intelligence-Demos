@@ -1,0 +1,37 @@
+version: '2'
+services:
+  bidemo-elk-es:
+    build: elasticsearch
+    container_name: bidemo-elk-es
+    environment:
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    ports:
+      - 9200:9200
+    networks:
+      - bidemo-elk-network
+  bidemo-elk-logstash:
+    build: logstash
+    ports:
+      - 9600:9600
+    networks:
+      - bidemo-elk-network
+    depends_on:
+      - bidemo-elk-es
+  bidemo-elk-kibana:
+    build: kibana
+    ports:
+      - 5601:5601
+    networks:
+      - bidemo-elk-network
+    depends_on:
+      - bidemo-elk-es
+
+networks:
+  bidemo-elk-network:
+    driver: bridge
