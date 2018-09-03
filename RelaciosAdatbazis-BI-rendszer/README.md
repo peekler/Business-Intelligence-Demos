@@ -186,9 +186,20 @@ truncate table [Staging]
 
 ## Basic statistics
 
-Let's use SQL queries to get some information.
+Let's use SQL queries to get some information. The relational database allows us to quickly process the data (as opposed to having to count lines in a text file). However, it requires "domain knowledge;" both the knowledges of a specialized language, SQL is needed, and the domain knowledge of how the database is built up.
 
-#### Number of successful and erroneous requests
+#### Number of requests
+
+We will seek ratio values for certain events. The denominator for all these is the number of requests.
+
+```sql
+select count(*)
+from [Log]
+```
+
+#### Number of *successful* requests
+
+We can easily query the number of successful queries. This gives us scalar values, from which, we can derive for example a ratio of successful requests. What is inconvenient here is that we have to know which field gives us the "success" state: _HttpStatusCode_ requires domain knowledge. (Not to mention that 200 is not the only acceptable code. But let's put that aside for now.)
 
 ```sql
 select count(*)
@@ -198,6 +209,8 @@ where [HttpStatusCode] = 200
 
 #### Requests that took too long to complete
 
+Let us see if there is any indication of performance issues. The following query is simple enough. Before we can write such a query we have to find out the measurement unit. This information is not present in the database. (Not to mention that if we were processing logs from various systems, we might have had to transform the measurement units during importing to have a single representation.)
+
 ```sql
 select *
 from [Log]
@@ -206,14 +219,18 @@ where [RequestTime] > 25
 
 #### Average request time per host
 
+Let's see if slow requests are specific to either of the hosts of our service. If one host is slower than the other, this could be a configuration issue.
+
 ```sql
 select [Host], AVG([RequestTime])
 from [Log]
 group by [Host]
 ```
 
+The average is different for the two hosts. But from these information we do not know if the difference is significant. Let us dive into deeper analysis of this.
+
 ## Detailed analysis of response times
 
-
+The average of the response times per host is different. But whether this difference is significant, we cannot yet establish. The average response time is a good measure, but it is volatile to outliers. Outliers are measurement points that are so off the chart, that they distort the data too much for meaningful analysis.
 
 ## Visualize with Excel
