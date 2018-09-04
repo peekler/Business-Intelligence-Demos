@@ -4,7 +4,7 @@ This demo will demonstrate how to build a simple business intelligence system. W
 
 ## Goal
 
-We have a log from a web server in text form. We are seeking to understand if there are problems that need addressing. We also want some basic statistical figures that gives us a hint about the load of the system.
+We have a log from a cluster of web servers in text form. We are seeking to understand if there are problems that need addressing. We also want some basic statistical figures that gives us a hint if there are performance issues within the system.
 
 ## Let's make a plan
 
@@ -24,12 +24,11 @@ We see that this is a CSV-like text format, which makes processing easy.
 
 We will process the data using Microsoft SQL Server, SQL command, and Microsoft Excel in the following way:
 
-1. Import the log file into a so called 'staging' area as-is.
+1. Import the log file into a so called _staging_ area as-is.
 1. Transform the raw data to fit further processing needs (e.g. parse string to date type).
 1. Use CLR integration to parse custom datetime string.
-1. Check basic statistics, like number of requests.
-1. Get detailed response time statistics, including standard deviation.
-1. Validate if erroneous requests are specific to one of the host servers (which would indicate a configuration error.)
+1. Check the request times, see if there is any indication of a performance issue.
+1. See if there is indeed significant performance different between the hosts in the system (which would indicate a configuration error.)
 1. Visualize the ratio of success / error requests in Excel.
 
 ### Pre-requisites
@@ -134,6 +133,7 @@ namespace CustomDateParse
 After compiling, let's import the dll assembly into SQL Server. We have to enable support for it first, and disable some security checks. In production, there are alternative ways to do this.
 
 ```sql
+-- Enable CLR integration
 sp_configure 'show advanced options', 1
 go
 reconfigure
@@ -145,8 +145,8 @@ GO
 RECONFIGURE
 GO
 
--- Regisztráljuk a .NET dll-t az SQL szerverben.
-CREATE ASSEMBLY CustomDateParseUdf FROM 'd:\CustomDateParse.dll';
+-- Register our assembly in the database
+CREATE ASSEMBLY CustomDateParseUdf FROM 'CustomDateParse.dll';
 GO
 CREATE FUNCTION dbo.ParseDateWithFormat(@value nvarchar(max), @format nvarchar(max))
 RETURNS datetime
@@ -159,7 +159,6 @@ Let us then test this function. More information on the custom datetime format s
 ```sql
 select dbo.ParseDateWithFormat('2018. 03. 28. 17:58:13','yyyy. MM. dd. H:m:s')
 ```
-
 
 ### Finish the import
 
@@ -186,7 +185,7 @@ truncate table [Staging]
 
 ## Basic statistics
 
-Let's use SQL queries to get some information. The relational database allows us to quickly process the data (as opposed to having to count lines in a text file). However, it requires "domain knowledge;" both the knowledges of a specialized language, SQL is needed, and the domain knowledge of how the database is built up.
+Let's use SQL queries to get some information. The relational database allows us to quickly process the data (as opposed to having to count lines in a text file). However, it requires _domain knowledge_; both the knowledge of a specialized language, SQL is needed, and the domain knowledge of how the database is structured.
 
 #### Number of requests
 
@@ -209,13 +208,22 @@ where [HttpStatusCode] = 200
 
 #### Requests that took too long to complete
 
-Let us see if there is any indication of performance issues. The following query is simple enough. Before we can write such a query we have to find out the measurement unit. This information is not present in the database. (Not to mention that if we were processing logs from various systems, we might have had to transform the measurement units during importing to have a single representation.)
+Let us see if there is any indication of performance issues. For that let's query the average response time.
 
 ```sql
-select *
+select AVG([RequestTime])
 from [Log]
-where [RequestTime] > 25
 ```
+
+And then let's see how many requests exceeded this average significantly. (The choice of 20 as a threshold is an arbitrary value for now. We will revisit the question of choosing more carefully.)
+
+```sql
+select count(*)
+from [Log]
+where [RequestTime] > 20
+```
+
+We see that there are slow requests. But we do not yet know the reason behind it.
 
 #### Average request time per host
 
@@ -227,10 +235,76 @@ from [Log]
 group by [Host]
 ```
 
-The average is different for the two hosts. But from these information we do not know if the difference is significant. Let us dive into deeper analysis of this.
+The average _seems_ significantly different for the two hosts. But let us examine it in a different way.
 
 ## Detailed analysis of response times
 
-The average of the response times per host is different. But whether this difference is significant, we cannot yet establish. The average response time is a good measure, but it is volatile to outliers. Outliers are measurement points that are so off the chart, that they distort the data too much for meaningful analysis.
+The analysis if the response time we did so far was not very sophisticated. It neglected a proper approach to the problem.
+
+#### Histogram of response times
+
+The average response time and the number of long requests does not paint a proper picture. Let us display the response times on a histogram instead. A histogram will show the ratio of how many requests are slow with respect to the whole dataset.
+
+In SQL Server there is no visualization, so we stick to SQL queries.
+
+```sql
+select
+(select count(*) from [Log] where [RequestTime] < 5) as '<5',
+(select count(*) from [Log] where [RequestTime] >= 5 and [RequestTime] < 10) as '5-10',
+(select count(*) from [Log] where [RequestTime] >= 10 and [RequestTime] < 15) as '10-15',
+(select count(*) from [Log] where [RequestTime] >= 15 and [RequestTime] < 20) as '15-20',
+(select count(*) from [Log] where [RequestTime] >= 20 and [RequestTime] < 25) as '20-25',
+(select count(*) from [Log] where [RequestTime] >= 25 and [RequestTime] < 50) as '25-50',
+(select count(*) from [Log] where [RequestTime] >= 50) as '50+'
+```
+
+#### Filtering outliers
+
+From the histogram we see that there is a small number of requests that have large response times (with respect to the whole dataset). These data points are called outliers. [Outliers](https://en.wikipedia.org/wiki/Outlier) are measurement points that are so off the chart, that they distort the data too much for meaningful analysis. As long as there is few of such data, we can filter them.
+
+Assuming that the response times follow a normal-like distribution (which it does not, but for the sake of the example, let's assume so), we can use standard deviation to find a threshold (cutoff point) above which we will consider a data point as outlier.
+
+Thus, we need
+
+* the mean,
+* and the standard deviation,
+* for each host (since they may be significantly different).
+
+```sql
+select [Host],
+	AVG([RequestTime]) as [mean],
+	STDEVP([RequestTime]) as [stdev]
+from [Log]
+group by [Host]
+```
+
+Then let's ignore any data point that is outside the (mean + 2 * standard deviation) cutoff point. (We are not filtering only large values. Outliers, however, can be small values too. We ignore this for now.)
+
+The following query gives us the amount of requests and the average time for each host without the outlier data points.
+
+```sql
+select d.[Host], AVG(d.[RequestTime]) as [avg], count(*) as [count]
+from [Log] d
+join (select [Host],
+		AVG([RequestTime]) as [mean],
+		STDEVP([RequestTime]) as [stdev]
+	  from [Log]
+	  group by [Host]) as outlier
+on d.[Host] = outlier.[Host]
+where d.[RequestTime] < (outlier.mean + 2 * outlier.stdev)
+group by d.[Host]
+```
+
+Although the average of the requests times indicated that one of the hosts was significantly slower than the other, we now see that the filtered average without the outliers is nearly identical - and much lower than the average. So we can conclude that the both hosts serve requests with the same speed, thus there is no performance issue.
 
 ## Visualize with Excel
+
+## Conclusions
+
+We learned from these examples that
+
+* a business intelligence system is indeed a system of tools, not a single software;
+* it purpose is to extract meaningful information from raw data to help business decisions;
+* the standard process is (1) data extraction, transformation, loading, (2) data processing, and (3) visualizing the results;
+* each step of the above requires domain knowledge without specialized tools, which is unacceptable for business end users;
+* hence a real business intelligence system should provide easier and simpler, self-explanatory and self-service access to the information.
