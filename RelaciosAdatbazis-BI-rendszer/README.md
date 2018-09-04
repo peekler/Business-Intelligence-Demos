@@ -299,6 +299,34 @@ Although the average of the requests times indicated that one of the hosts was s
 
 ## Visualize with Excel
 
+The numbers we got so far were enough to derive conclusions. But we needed to use SQL queries and a developer tool to run the queries. A visual representation of the results is much easier to grasp. Let's use Excel to get the ration of the successful and erroneous requests.
+
+1. Open a blank Excel sheet
+2. Do to the _Data_ ribbon, click _Get external data_ / _From other sources_ / _SQL server_
+
+![Select data source](images/excel-sql-data-source.png)
+
+3. Go through the wizard and connect to the database, and select the _Log_ table
+
+![Select data source](images/excel-connect-sql-server.png)
+
+![Select database and table](images/excel-select-sql-table.png)
+
+4. Finish the wizard by choosing _Pivot chart_
+
+![Select data source](images/excel-choose-pivot.png)
+
+The Excel sheet now has a connection to the data source. Set up the Pivot Chart
+
+* with the _Host_ field used for _Legend_;
+* the _Axis category_ is the _HttpStatusCode_ field;
+* the _Values_ being the count of _RequestId_s,
+* and the vertical axis having logarithmic scale.
+
+![Select data source](images/excel-pivot-chart-config.png)
+
+Now we see the distribution of the response codes for each host. This visualization gives an easy overview of the statuses. (We chose logarithmic scale because there were only a few erroneous requests and they are not visible on the diagram otherwise.)
+
 ## Conclusions
 
 We learned from these examples that
