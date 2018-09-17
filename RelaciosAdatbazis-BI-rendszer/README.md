@@ -278,7 +278,7 @@ from [Log]
 group by [Host]
 ```
 
-Then let's ignore any data point that is outside the (mean + 2 * standard deviation) cutoff point. (We are not filtering only large values. Outliers, however, can be small values too. We ignore this for now.)
+Then let's ignore any data point that is outside the (mean + 2 * standard deviation) cutoff point.
 
 The following query gives us the amount of requests and the average time for each host without the outlier data points.
 
@@ -299,7 +299,11 @@ Although the average of the requests times indicated that one of the hosts was s
 
 ## Visualize with Excel
 
-The numbers we got so far were enough to derive conclusions. But we needed to use SQL queries and a developer tool to run the queries. A visual representation of the results is much easier to grasp. Let's use Excel to get the ration of the successful and erroneous requests.
+The numbers we got so far were enough to derive conclusions. But we needed to use SQL queries and a developer tool to run the queries. A visual representation of the results is much easier to grasp.
+
+#### Histogram of response times
+
+We already tried to get the histogram of response times. Let's visualize them now. We will use Excel and the [Analysis ToolPak](https://www.excel-easy.com/data-analysis/analysis-toolpak.html). You must enable it in Excel (see link).
 
 1. Open a blank Excel sheet
 2. Do to the _Data_ ribbon, click _Get external data_ / _From other sources_ / _SQL server_
@@ -312,6 +316,35 @@ The numbers we got so far were enough to derive conclusions. But we needed to us
 
 ![Select database and table](images/excel-select-sql-table.png)
 
+4. Finish the wizard by choosing _Table_
+
+![Select import type](images/excel-choose-table-import.png)
+
+This copies the data into Excel.
+
+5. Now use the _Data analysis_ button on the _Data_ ribbon
+
+![Data analysis button](images/excel-data-analysis-button.png)
+
+Choose the _Histogram_ option
+
+![Data analysis button](images/excel-choose-histogram.png)
+
+Select the _Input range_ to be the request time column and the _Bin range_ to be the categories of the histogram (entered manually into column J). Make sure to check the _Chart output_.
+
+![Histogram options](images/excel-histogram-options.png)
+
+The result is a new Excel sheet with the cumulative data in a table and as a chart.
+
+![Histogram result](images/excel-histogram-result.png)
+
+#### Ratio of successful and erroneous requests
+
+Let's use Excel to get the ration of the successful and erroneous requests.
+
+1. Open a blank Excel sheet
+2. Go to the _Data_ ribbon, click _Get external data_ / _From other sources_ / _SQL server_
+3. Go through the wizard and connect to the database, and select the _Log_ table
 4. Finish the wizard by choosing _Pivot chart_
 
 ![Select data source](images/excel-choose-pivot.png)
