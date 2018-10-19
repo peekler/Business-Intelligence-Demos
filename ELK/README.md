@@ -16,12 +16,12 @@ We have a text-based input file containing a log of IO accesses in a particular 
 
 ### Pre-requisites
 
-* Docker
+* Docker CE
 * In Windows, Docker must be running in _Linux container mode_. You must also [share the drive](https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/) where our files are, otherwise the volume mounts will not work.
 
 ## Create an ELK cluster in Docker and import the data using Logstash
 
-We need three pieces of software in our system. We will use Docker to start them. The system is described by the docker-compose.yaml file.
+We need three pieces of software in our system. We will use Docker to start them. The system is described by the docker-compose.yml file.
 
 ### The compose file
 
