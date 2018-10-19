@@ -1,5 +1,7 @@
 # Using R for data analysis
 
+R is a programming language focused on mathematical and statistical analysis. The following demonstrates its capabilities and usage.
+
 ## Further reading material
 
 * About R: http://www.r-tutor.com/r-introduction
@@ -7,11 +9,11 @@
 
 ## Problem statement
 
-We have a cool website, where people manage their tasks (like Jira, or Asana). We are rolling out a new UI design. We are interested in how many tasks generally do people have, because it would help us determine the size of the list to display. E.g. should we list only the first 5 items, or the first 50?
+We have a cool website, where people manage their tasks (like Jira, or Asana). We are rolling out a new UI design. We are interested in how many tasks generally do people have, because it would help us determine how the front page should look like (i.e. initial size of the task list). E.g. should we list only the first 5 items, or the first 50?
 
 We are concerned with usability as well as the performance of the app. The more tasks we display, the more resources it will need (e.g. database access).
 
-We are given a text file that is taken from our current website's telemetry service. It contains the number of tasks people list on their current front page, and the time it takes for the server to render the page.
+We are given a text file that is taken from our current website's telemetry service. It contains the number of tasks people have, and the time it takes for the current application to render the page listing the tasks.
 
 ![Preview of raw data](images/raw-data-excel.png)
 
@@ -91,7 +93,7 @@ So we should list at least 9, and probably less than 40 items.
 
 In other words, is there a performance penalty is displaying more items on the first page?
 
-To determine this, we need to perform a _correlation test_. With the correlation test we can evaluate if there is an association between two or more variables. One of the most frequently used methods is calculating the [Pearson correlation coefficient](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient). There is built-in support for calculating this.
+To determine this, we need to perform a _correlation test_. With the correlation test we can evaluate if there is an association between two or more variables (in our case: between the number of tasks and the response time). One of the most frequently used methods is calculating the [Pearson correlation coefficient](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient). In R there is built-in support for calculating this.
 
 ```R
 cor.test(df$taskCount, df$responseTime, method = "pearson")
