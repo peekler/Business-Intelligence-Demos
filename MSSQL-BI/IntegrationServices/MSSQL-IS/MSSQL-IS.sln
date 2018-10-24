@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "MSSQL-IS", "MSSQL-IS.dtproj", "{26762451-201F-421B-8DA9-A8ED03D55F33}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26762451-201F-421B-8DA9-A8ED03D55F33}.Development|Default.ActiveCfg = Development
+		{26762451-201F-421B-8DA9-A8ED03D55F33}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5551A5B-7D31-4809-886D-4F0D2700510C}
+	EndGlobalSection
+EndGlobal
