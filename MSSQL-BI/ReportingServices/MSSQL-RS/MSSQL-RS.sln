@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "MSSQL-RS", "MSSQL-RS.rptproj", "{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.Debug|Default.ActiveCfg = Debug
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.Debug|Default.Build.0 = Debug
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.Debug|Default.Deploy.0 = Debug
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.DebugLocal|Default.Build.0 = DebugLocal
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.Release|Default.ActiveCfg = Release
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.Release|Default.Build.0 = Release
+		{DE61F819-BA7F-4260-ABA2-CF24E019FF5F}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14DFBE7D-FCE4-4865-8E8C-0A7A236C5ACC}
+	EndGlobalSection
+EndGlobal

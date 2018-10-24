@@ -8,6 +8,12 @@ Let's analyze how the currency exchange rates change over time. We are particula
 
 The data is from <http://sdw.ecb.europa.eu/browse.do?node=9691296>.
 
+1. We will create a new database to store the data;
+
+1. Then import the data using Integration Services;
+
+1. Finally, we will create visual reports using Reporting Services.
+
 ### Pre-requisites
 
 * Microsoft SQL Server
@@ -15,11 +21,9 @@ The data is from <http://sdw.ecb.europa.eu/browse.do?node=9691296>.
 * SQL Server Data Tools (SSDT) for Visual Studio from <https://docs.microsoft.com/en-us/sql/ssdt/download-sql-server-data-tools-ssdt?view=sql-server-2017>
 * Data files from the [data](./data) directory
 
-## Data import with Integration Services
+## Database
 
-### Database
-
-First, create a new database in Microsoft SQL Server with a single table.
+We will store the data in a relational database. Let's create a new database in Microsoft SQL Server with a single table.
 
 ```sql
 CREATE TABLE [ExchangeRates](
@@ -30,11 +34,13 @@ CREATE TABLE [ExchangeRates](
 GO
 ```
 
-### Create the ETL process control flow
+## Data import with Integration Services
 
 The developer tool for Integration Services is Visual Studio. Once the _SQL Server Data Tools_ package is installed, new project types are available in the project wizard. Let's create an _Integration Services Project_.
 
 ![BI project types in VS](images/vs-project-types.png)
+
+### Create the ETL process control flow
 
 The empty project contains a blank designer surface, where we can drag items from the _SSIS Toolbox_. The current view is the _Control Flow_, which is the entire process of the ETL task.
 
@@ -157,3 +163,76 @@ Now run the process again. It will succeed.
 Check the result of the import in the database by previewing the contents of the table.
 
 ![Preview the data in the database](images/db-data-preview.png)
+
+## Visualization with Reporting Services
+
+Launch Visual Studio and create a new _Report Server Project_.
+
+![Report Server Project in Visual Studio project creation](images/vs-project-types-rs.png)
+
+### Create a new report
+
+The solution is empty. Let's add a new item to the solution in the _Solution Explorer_ by right clicking the _Reports_ folder.
+
+![Add new report](images/rs-new-report-solution.png)
+
+Choose the _Report_ element. This yields an empty report. (Note: you can use the _Add New Report_ item as well, which will guide you through a wizard.)
+
+### Create a new data source
+
+Before the report is assembled, we need a data source. The data source is a link to the SQL Server database we created.
+
+1. In the _Report Data_ pane right click the _Data Sources_ folder and add a new data source.
+
+    ![Add new data source](images/rs-new-datasource.png)
+
+1. Choose _Microsoft SQL Server_ as connection type and use the _Edit_ button to specify the server access information. (This dialog is similar to the one we used in Integration Services.)
+
+    ![Edit data source](images/rs-new-datasource-connection.png)
+
+### Create a new dataset
+
+The data source is a link to the SQL server. But it does not specify what data to fetch. This needs a new _dataset_.
+
+1. Use the _Report Date_ pane to create a new dataset.
+
+1. Choose to embed the dataset in the report.
+
+1. Using the dropdown select the data source created before.
+
+1. Then specify the SQL query. We are fetching the weekly maximum of the exchange rates by grouping on the week number calculated by built-in function [DATEPART](https://docs.microsoft.com/en-us/sql/t-sql/functions/datepart-transact-sql?view=sql-server-2017).
+
+    ```sql
+    SELECT DATEPART(wk, [Day]) as [Week], MAX([HUF]) as [HUF], MAX([USD]) as [USD]
+    FROM [ExchangeRates]
+    WHERE YEAR([DAY])=2018
+    GROUP BY DATEPART(wk, [Day])
+    ```
+
+    Reporting Services does not transform the data (other than sorting), so any processing we need to get the data in the right format for visualization, we have to do using SQL.
+
+    ![Dataset settings](images/rs-new-dataset.png)
+
+In contrast to the DataSet in ADO.NET, this dataset we created is just an SQL query; it does not contain the data. Every time the report is rendered, the dataset is populated from the database.
+
+### Add a diagram to the report
+
+Now that the data is ready, let's add a diagram to the empty report.
+
+1. Grab a _Chart_ from the _Toolbox_ and put in on the report.
+
+    ![Chart in the toolbox](images/rs-report-add-chart.png)
+
+1. Select the _Line with markers_ chart type.
+
+    ![Select chart type](images/rs-report-chart-type.png)
+
+1. Left click the chart area to have the _Chart Data_ overlay pop up. This is where the chart axis and values are connected to the fields of the dataset. The _Value_ is the _HUF_ field and the _Category groups_ is the _Week_ field.
+
+    ![Chart data](images/rs-chart-data.png)
+
+### Preview the report
+
+The report is usually published to the Report Server. But we can preview the report in Visual Studio:
+
+![Report preview](images/rs-preview.png)
