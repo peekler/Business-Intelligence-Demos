@@ -313,3 +313,10 @@ To stop the Docker containers, press CTRL-C in the console. Will not delete the 
 ```
 docker-compose rm
 ```
+
+ ## Further reading material
+
+* [What is an Elasticsearch index](https://www.elastic.co/blog/what-is-an-elasticsearch-index)
+* [Elasticsearch terminology](https://www.elastic.co/guide/en/elasticsearch/reference/current/_basic_concepts.html)
+* [Elasticsearch mapping](https://www.elastic.co/blog/found-elasticsearch-mapping-introduction)
+* [Elasticsearch 6.0 removal of types](https://medium.com/@federicopanini/elasticsearch-6-0-removal-of-mapping-types-526a67ff772)

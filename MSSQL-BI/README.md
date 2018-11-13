@@ -236,3 +236,10 @@ Now that the data is ready, let's add a diagram to the empty report.
 The report is usually published to the Report Server. But we can preview the report in Visual Studio:
 
 ![Report preview](images/rs-preview.png)
+
+## Further reading material
+
+* [Integration Services Control flow](https://docs.microsoft.com/en-us/sql/integration-services/control-flow/control-flow?view=sql-server-2017)
+* [Integration Services Data flow](https://docs.microsoft.com/en-us/sql/integration-services/data-flow/data-flow?view=sql-server-2017)
+* [Reporting Services data sources](https://docs.microsoft.com/en-us/sql/reporting-services/report-data/data-connections-data-sources-and-connection-strings-report-builder-and-ssrs?view=sql-server-2017)
+* [Reporting Services datasets](https://docs.microsoft.com/en-us/sql/reporting-services/report-data/report-datasets-ssrs?view=sql-server-2017)
