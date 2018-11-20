@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   bidemo-elk-es:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.2
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.3
     environment:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -19,7 +19,7 @@ services:
     networks:
       - bidemo-elk-network
   bidemo-elk-logstash:
-    image: docker.elastic.co/logstash/logstash-oss:6.4.2
+    image: docker.elastic.co/logstash/logstash-oss:6.4.3
     volumes:
       - type: bind
         source: ./logstash/pipeline
@@ -36,7 +36,7 @@ services:
     depends_on:
       - bidemo-elk-es
   bidemo-elk-kibana:
-    image: docker.elastic.co/kibana/kibana-oss:6.4.2
+    image: docker.elastic.co/kibana/kibana-oss:6.4.3
     environment:
       ELASTICSEARCH_URL: http://bidemo-elk-es:9200
     ports:
