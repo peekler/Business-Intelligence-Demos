@@ -4,7 +4,7 @@ Docker is a container virtualization software. Docker can be used in a wide vari
 
 ## Pre-requisites
 
-* Docker CE: free to install on Linux, Mac and Windows
+* Docker Desktop: free to install on Linux, Mac and Windows
 
 ## Starting Elasticsearch and Kibana on Docker
 
