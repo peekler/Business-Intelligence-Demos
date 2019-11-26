@@ -16,8 +16,8 @@ We have a text-based input file containing a log of IO accesses in a particular 
 
 ### Pre-requisites
 
-* Docker CE
-* In Windows, Docker must be running in _Linux container mode_. You must also [share the drive](https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/) where our files are, otherwise the volume mounts will not work.
+- Docker CE
+- In Windows, Docker must be running in _Linux container mode_. You must also [share the drive](https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/) where our files are, otherwise the volume mounts will not work.
 
 ## Create an ELK cluster in Docker and import the data using Logstash
 
@@ -27,10 +27,10 @@ We need three pieces of software in our system. We will use Docker to start them
 
 Check the [docker-compose](./docker-compose.yml) file.
 
-* Identify the services (the three apps for ELK).
-* See how they are connected: through a bridge network.
-* See how the services are configured: environment variables are passed to them (e.g. Kibana needs the URL of the Elasticsearch cluster).
-* Observe the volume mounts in the Logstash container: we map folders from our host computer into the containers to pass the data and configuration.
+- Identify the services (the three apps for ELK).
+- See how they are connected: through a bridge network.
+- See how the services are configured: environment variables are passed to them (e.g. Kibana needs the URL of the Elasticsearch cluster).
+- Observe the volume mounts in the Logstash container: we map folders from our host computer into the containers to pass the data and configuration.
 
 ### The Logstash pipeline configuration
 
@@ -92,7 +92,6 @@ The cluster will take some time to start, then Logstash will start importing the
 
 Kibana is a web-based dashboard. Open a browser and connect to http://localhost:5601.
 
-
 ### Index pattern
 
 First we need to configure a so called _index pattern_. This is like a data schema. Although Elasticsearch is, as a No-SQL database, schema-less, Kibana extracts the schema of the data in order to provide meaningful display.
@@ -101,11 +100,11 @@ Click the _Discover_ link on the left, which will take us to the index configura
 
 ![Index pattern configuration](images/kibana-index-config.png)
 
-Type "log*" as the index pattern definition, and then select the timestamp field. Although it is not necessary to have a time/date field, Kibana is most useful when the data has a time dimension.
+Type "log\*" as the index pattern definition, and then select the timestamp field. Although it is not necessary to have a time/date field, Kibana is most useful when the data has a time dimension.
 
 ![Timestamp column configuration](images/kibana-timestamp-config.png)
 
-Now our index pattern is ready. If the schema if the data changes in the future, this index pattern __must be updated__ in Kibana in the _Management_ page.
+Now our index pattern is ready. If the schema if the data changes in the future, this index pattern **must be updated** in Kibana in the _Management_ page.
 
 ### Discover the data
 
@@ -205,7 +204,7 @@ GET /logstash-procdump/_search
 
 ## Create a dashboard in Kibana
 
-We can create a dashboard ourself using Kibana, and export it later in json format. Let's import the _kibana-export.json_ file. Go to the _Management_ page, follow the _Saved objects_ link and use the _Import_ command. During the import you will need to select the _index pattern_ created before to use as the data source. After the import succeeds, go to the _Dashboards_ page and open the _procdump dashboard_. (If you see no data, use the time range filter in the top right corner.)
+We can create a dashboard ourself using Kibana, and export it later as a file. Let's import the _kibana-export.ndjson_ file. Go to the _Management_ page, follow the _Saved objects_ link and use the _Import_ command. During the import you will need to select the _index pattern_ created before to use as the data source. After the import succeeds, go to the _Dashboards_ page and open the _procdump dashboard_. (If you see no data, use the time range filter in the top right corner.)
 
 ![The dashboard in Kibana](images/kibana-dashboard.png)
 
@@ -314,9 +313,9 @@ To stop the Docker containers, press CTRL-C in the console. Will not delete the 
 docker-compose rm
 ```
 
- ## Further reading material
+## Further reading material
 
-* [What is an Elasticsearch index](https://www.elastic.co/blog/what-is-an-elasticsearch-index)
-* [Elasticsearch terminology](https://www.elastic.co/guide/en/elasticsearch/reference/current/_basic_concepts.html)
-* [Elasticsearch mapping](https://www.elastic.co/blog/found-elasticsearch-mapping-introduction)
-* [Elasticsearch 6.0 removal of types](https://medium.com/@federicopanini/elasticsearch-6-0-removal-of-mapping-types-526a67ff772)
+- [What is an Elasticsearch index](https://www.elastic.co/blog/what-is-an-elasticsearch-index)
+- [Elasticsearch terminology](https://www.elastic.co/guide/en/elasticsearch/reference/current/_basic_concepts.html)
+- [Elasticsearch mapping](https://www.elastic.co/blog/found-elasticsearch-mapping-introduction)
+- [Elasticsearch 6.0 removal of types](https://medium.com/@federicopanini/elasticsearch-6-0-removal-of-mapping-types-526a67ff772)
