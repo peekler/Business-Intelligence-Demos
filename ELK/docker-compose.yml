@@ -1,12 +1,13 @@
-version: '3.4'
+version: "3.4"
 
 services:
   bidemo-elk-es:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.4.3
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.4.2
     environment:
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - "discovery.zen.minimum_master_nodes: 1"
+      - cluster.name=elasticsearch # Settings to start Elasticsearch in a single-node development environment
+      - node.name=elasticsearch
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
     ulimits:
       memlock:
         soft: -1
@@ -19,7 +20,7 @@ services:
     networks:
       - bidemo-elk-network
   bidemo-elk-logstash:
-    image: docker.elastic.co/logstash/logstash-oss:6.4.3
+    image: docker.elastic.co/logstash/logstash-oss:7.4.2
     volumes:
       - type: bind
         source: ./logstash/pipeline
@@ -36,7 +37,7 @@ services:
     depends_on:
       - bidemo-elk-es
   bidemo-elk-kibana:
-    image: docker.elastic.co/kibana/kibana-oss:6.4.3
+    image: docker.elastic.co/kibana/kibana-oss:7.4.2
     environment:
       ELASTICSEARCH_URL: http://bidemo-elk-es:9200
     ports:
