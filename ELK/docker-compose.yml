@@ -39,7 +39,7 @@ services:
   bidemo-elk-kibana:
     image: docker.elastic.co/kibana/kibana-oss:7.4.2
     environment:
-      ELASTICSEARCH_URL: http://bidemo-elk-es:9200
+      ELASTICSEARCH_HOSTS: http://bidemo-elk-es:9200
     ports:
       - 5601:5601
     networks:
