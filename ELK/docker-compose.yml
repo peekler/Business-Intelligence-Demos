@@ -2,7 +2,7 @@ version: "3.4"
 
 services:
   bidemo-elk-es:
-    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.4.2
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.9.2
     environment:
       - cluster.name=elasticsearch # Settings to start Elasticsearch in a single-node development environment
       - node.name=elasticsearch
@@ -20,7 +20,7 @@ services:
     networks:
       - bidemo-elk-network
   bidemo-elk-logstash:
-    image: docker.elastic.co/logstash/logstash-oss:7.4.2
+    image: docker.elastic.co/logstash/logstash-oss:7.9.2
     volumes:
       - type: bind
         source: ./logstash/pipeline
@@ -37,7 +37,7 @@ services:
     depends_on:
       - bidemo-elk-es
   bidemo-elk-kibana:
-    image: docker.elastic.co/kibana/kibana-oss:7.4.2
+    image: docker.elastic.co/kibana/kibana-oss:7.9.2
     environment:
       ELASTICSEARCH_HOSTS: http://bidemo-elk-es:9200
     ports:
