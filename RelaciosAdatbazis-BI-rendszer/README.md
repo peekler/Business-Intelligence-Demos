@@ -340,7 +340,7 @@ The result is a new Excel sheet with the cumulative data in a table and as a cha
 
 #### Ratio of successful and erroneous requests
 
-Let's use Excel to get the ration of the successful and erroneous requests.
+Let's use Excel to get the ratio of successful and erroneous requests.
 
 1. Open a blank Excel sheet
 2. Go to the _Data_ ribbon, click _Get external data_ / _From other sources_ / _SQL server_
