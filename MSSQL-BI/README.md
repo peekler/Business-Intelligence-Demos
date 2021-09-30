@@ -111,7 +111,7 @@ Open the _import_ data flow task, that brings us to another empty page. This is 
 
    Drag two _Sort_ boxes from the toolbox and connect the blue arrow from each flat file task into one of the sort boxes. The blue arrow is the output of the CSV read tasks; the red is the error output of failed records.
 
-   Open both _Sort_boxes and check the \_Day_ column to sort the dataset based on this.
+   Open both _Sort_ boxes and check the _Day_ column to sort the dataset based on this.
 
    ![Sort the data](images/data-flow-sort.png)
 
