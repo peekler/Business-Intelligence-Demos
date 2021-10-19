@@ -1,7 +1,7 @@
 version: '2'
 services:
   bidemo-influx-db:
-    image: influxdb
+    image: influxdb:1.8
     container_name: bidemo-influx-db
     ports:
       - 8086:8086
