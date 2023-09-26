@@ -16,11 +16,10 @@ The data is from <http://sdw.ecb.europa.eu/browse.do?node=9691296>.
 
 - Microsoft SQL Server
 - [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms) or any other DB management tool
-- Microsoft Visual Studio 2017 / 2019. The community version is sufficient.
+- Microsoft Visual Studio 2022. The community version is sufficient.
 - Integration Services and Report Server Project support for Visual Studio
-  - Visual Studio 2017: [SQL Server Data Tools](https://docs.microsoft.com/en-us/sql/ssdt/download-sql-server-data-tools-ssdt?view=sql-server-2017#install-analysis-services-integration-services-and-reporting-services-tools)
-  - Visual Studio 2019:
-    - [Microsoft Reporting Services Projects extension](https://marketplace.visualstudio.com/items?itemName=ProBITools.MicrosoftReportProjectsforVisualStudio)
+  - Visual Studio 2022:
+    - [Microsoft Reporting Services Projects extension](https://marketplace.visualstudio.com/items?itemName=ProBITools.MicrosoftReportProjectsforVisualStudio2022)
     - [SQL Server Integration Services Projects extension](https://marketplace.visualstudio.com/items?itemName=SSIS.SqlServerIntegrationServicesProjects).
 - Data files from the [data](./data) directory
 
