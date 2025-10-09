@@ -122,6 +122,8 @@ Every thesis has a supervisor, who is associated with a department. Let's create
 
     Drag the _Abbreviation_ from the _Department_ table to the _Legend_ area, and _ID_ from _Thesis_ into the _Values_ area, then select the Count metric.
 
+    ![Column diagram example](images/report-thesis-by-department.png)
+
 ## Creating Additional Visualizations
 
 Power BI offers numerous visualization types:
@@ -182,4 +184,3 @@ Power BI Service offers additional features:
 3. **Apps**: Grouping and sharing reports and dashboards
 4. **Mobile view**: Optimizing reports for mobile devices
 5. **Alerts**: Setting up notifications for data changes
-    ![Column diagram example](images/report-thesis-by-department.png)
