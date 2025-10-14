@@ -126,14 +126,6 @@ Every thesis has a supervisor, who is associated with a department. Let's create
 
 ## Creating Additional Visualizations
 
-Power BI offers numerous visualization types:
-
-### Time Series Analysis
-
-1. Create a line chart showing the number of theses over time:
-   - Drag the date field to the X-axis
-   - Drag the thesis ID to the Y-axis (Count)
-   - Use filters to select specific time periods
 
 ### Creating Interactive Filters
 
@@ -141,13 +133,6 @@ Power BI offers numerous visualization types:
    - Select the "Slicer" visualization from the visualization panel
    - Drag a field (e.g., Department, Program) to the slicer
    - The slicer now acts as an interactive filter for all visualizations in the report
-
-### Map Visualization
-
-If you have geographical data (e.g., students' places of origin):
-1. Select the "Map" visualization
-2. Drag the geographical data (city, country) to the "Location" field
-3. Drag the metric (e.g., number of students) to the "Size" field
 
 ### Cards and KPIs
 
